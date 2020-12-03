@@ -11,88 +11,88 @@ void provaToString(Prova p) {
     printf("prova.intVal = %d, prova.floatVal = %f\n", p.intVal, p.floatVal);
 }
 
-bool equalsProva(const void *elem1, const void *elem2) {
+bool_t equalsProva(const void *elem1, const void *elem2) {
     if ((((Prova *) elem1)->intVal == ((Prova *)elem2)->intVal)
     && (((Prova *) elem1)->floatVal == ((Prova *)elem2)->floatVal))
-        return true;
+        return TRUE;
 
-    return false;
+    return FALSE;
 }
 
-bool equalsInt(const void *elem1, const void *elem2){
+bool_t equalsInt(const void *elem1, const void *elem2){
     if (*((int *) elem1) == *((int *) elem2))
-        return true;
+        return TRUE;
 
-    return false;
+    return FALSE;
 }
 
 int main() {
-    dyn_arr_create(int) array;
+    DYN_ARR_CREATE(int) array;
     //dyn_arr_init(array, 10);
-    dyn_arr_init_default(array);
+    DYN_ARR_INIT_DEFAULT(array);
 
     for (int i = 0; i < 10; ++i) {
-        dyn_arr_push(array, i);
+        DYN_ARR_PUSH(array, i);
     }
 
     int element = 8;
-    printf("\nl'elemento %d si trova in posizione %d\n\n", element, dyn_arr_index_of_elem(array, element, equalsInt));
+    printf("\nl'elemento %d si trova in posizione %d\n\n", element, DYN_ARR_INDEX_OF_ELEM(array, element, equalsInt));
 
-    dyn_arr_remove_elem(array, 4);
-    dyn_arr_remove_specific_elem(array, element, equalsInt);
-    for (int i = 0; i < dyn_arr_get_size(array); ++i) {
-        printf("array[%d] = %d\n", i, dyn_arr_get_elem(array, i));
+    DYN_ARR_REMOVE_ELEM(array, 4);
+    DYN_aRR_REMOVE_SPECIFIC_ELEM(array, element, equalsInt);
+    for (int i = 0; i < DYN_ARR_GET_SIZE(array); ++i) {
+        printf("array[%d] = %d\n", i, DYN_ARR_GET_ELEM(array, i));
     }
 
     printf("\n");
 
     /*test con struct*/
-    dyn_arr_create(Prova) arrayProve;
-    dyn_arr_init(arrayProve, 2);
+    DYN_ARR_CREATE(Prova) arrayProve;
+    DYN_ARR_INIT(arrayProve, 2);
 
     Prova prova = {12, 12.34f};
-    dyn_arr_push(arrayProve, prova);
+    DYN_ARR_PUSH(arrayProve, prova);
     prova.floatVal = 1.23f;
-    dyn_arr_push(arrayProve, prova);
+    DYN_ARR_PUSH(arrayProve, prova);
     prova.intVal = 999;
-    dyn_arr_push(arrayProve, prova);
+    DYN_ARR_PUSH(arrayProve, prova);
 
-    dyn_arr_get_elem_secure(arrayProve, 2, prova);
+    DYN_ARR_GET_ELEM_SECURE(arrayProve, 2, prova);
     provaToString(prova);
-    printf("size: %zu, capacity: %zu\n", dyn_arr_get_size(arrayProve), dyn_arr_get_capacity(arrayProve));
+    printf("size: %zu, capacity: %zu\n", DYN_ARR_GET_SIZE(arrayProve), DYN_ARR_GET_CAPACITY(arrayProve));
 
     printf("\n");
 
     Prova prova2;
-    if (dyn_arr_pop(arrayProve, prova2)) {
+    if (DYN_ARR_POP(arrayProve, prova2)) {
         provaToString(prova2);
-        printf("%zu\n", dyn_arr_get_size(arrayProve));
+        printf("%zu\n", DYN_ARR_GET_SIZE(arrayProve));
     } else {
         printf("array vuoto");
     }
 
     printf("\n");
 
-    for (int i = 0; i < dyn_arr_get_size(arrayProve); ++i) {
-        provaToString(dyn_arr_get_elem(arrayProve, i));
+    for (int i = 0; i < DYN_ARR_GET_SIZE(arrayProve); ++i) {
+        provaToString(DYN_ARR_GET_ELEM(arrayProve, i));
     }
 
-    dyn_arr_remove_elem(arrayProve, 1);
+    DYN_ARR_REMOVE_ELEM(arrayProve, 1);
     printf("\n");
 
-    for (int i = 0; i < dyn_arr_get_size(arrayProve); ++i) {
-        provaToString(dyn_arr_get_elem(arrayProve, i));
+    for (int i = 0; i < DYN_ARR_GET_SIZE(arrayProve); ++i) {
+        provaToString(DYN_ARR_GET_ELEM(arrayProve, i));
     }
 
-    dyn_arr_push(arrayProve, prova);
-    if (dyn_arr_contains_elem(arrayProve, prova, equalsProva))
+    DYN_ARR_PUSH(arrayProve, prova);
+    if (DYN_ARR_CONTAINS_ELEM(arrayProve, prova, equalsProva))
         printf("\nelemento trovato\n");
     else
         printf("elemento non trovato\n");
 
     /*free memory*/
-    dyn_arr_destroy(array);
-    dyn_arr_destroy(arrayProve);
+    DYN_ARR_DESTROY(array);
+    DYN_ARR_DESTROY(arrayProve);
 
     return 0;
 }
