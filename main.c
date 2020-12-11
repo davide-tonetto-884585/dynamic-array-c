@@ -26,8 +26,13 @@ bool_t equalsInt(const void *elem1, const void *elem2){
     return FALSE;
 }
 
+DYN_ARR_CREATE(int);
+DYN_ARR_CREATE(Prova);
+
 int main() {
-    DYN_ARR_CREATE(int) array;
+
+    struct dyn_arr_int array;
+
     //dyn_arr_init(array, 10);
     DYN_ARR_INIT_DEFAULT(array);
 
@@ -47,7 +52,7 @@ int main() {
     printf("\n");
 
     /*test con struct*/
-    DYN_ARR_CREATE(Prova) arrayProve;
+    struct dyn_arr_Prova arrayProve;
     DYN_ARR_INIT(arrayProve, 2);
 
     Prova prova = {12, 12.34f};

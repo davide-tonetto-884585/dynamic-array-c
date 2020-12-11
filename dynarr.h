@@ -1,10 +1,14 @@
+/** @file dynarr.h
+ *  @brief libreria che implementa array dinamici generici tramite utilizzo del macroprocessore
+ */
+
 #ifndef DYNARR
 #define DYNARR
 
 #include <stdlib.h>
 #include <string.h>
 
-#define DYN_ARR_DEFAULT_CAPACITY (2)
+#define DYN_ARR_DEFAULT_CAPACITY (2) /**< capacità di default dei vettori dinamici */
 
 /**
  * @brief enum che implementa il tipo bool
@@ -43,7 +47,7 @@ void *_dyn_arr_init(dyn_arr_info_t *info, size_t elem_size, size_t capacity);
  * @param elem - void pointer all'elemento da aggiungere
  * @return void
  * */
-void _dyn_arr_push(void *data, dyn_arr_info_t *info, void *elem);
+void *_dyn_arr_push(void *data, dyn_arr_info_t *info, void *elem);
 
 /** rimuove l'ultimo elemento dell'array dinamico (se serve alloca ulteriore spazio)
  *
@@ -90,7 +94,7 @@ bool_t _dyn_arr_remove_elem(void *data, dyn_arr_info_t *info, size_t position);
  * @return bool_t - true se l'elemento è stato trovato
  * */
 bool_t _dyn_arr_contains_elem(void *data, size_t dataSize, dyn_arr_info_t *info, void *element,
-                            bool_t (*equals)(const void *, const void *));
+                              bool_t (*equals)(const void *, const void *));
 
 /** ritorna la posizione della prima ricorrenza di element nell'array oppure -1 se non lo trova
  *
@@ -102,14 +106,14 @@ bool_t _dyn_arr_contains_elem(void *data, size_t dataSize, dyn_arr_info_t *info,
  * @return int - posizione della prima ricorrenza dell'elemento o -1 se non lo trova
  * */
 int _dyn_arr_index_of_elem(void *data, size_t dataSize, int cont, dyn_arr_info_t *info, void *element,
-                              bool_t (*equals)(const void *, const void *));
+                           bool_t (*equals)(const void *, const void *));
 
 /** definisce uno struct contenente le informazioni dell'array dinamico e l'array stesso del tipo passato
  *
  * @param type - definisce il tipo degli elementi dell'array dinamico
  * @return void
  * */
-#define DYN_ARR_CREATE(type) struct { dyn_arr_info_t info; type *data; }
+#define DYN_ARR_CREATE(type) typedef struct dyn_arr_##type { dyn_arr_info_t info; type *data; } dyn_arr_##type
 
 /** inizialzza l'array dinamico passato per argomento con una capacity di default
  *
@@ -132,7 +136,7 @@ int _dyn_arr_index_of_elem(void *data, size_t dataSize, int cont, dyn_arr_info_t
  * @param val - elemento da inserire (deve essere del tipo definito alla creazione dell'array dinamico)
  * @return void
  * */
-#define DYN_ARR_PUSH(array, val) _dyn_arr_push(array.data, &array.info, &val)
+#define DYN_ARR_PUSH(array, val) array.data = _dyn_arr_push(array.data, &array.info, &val)
 
 /* In GNU C, but not GNU C++, you may also declare the type of a variable as __auto_type. In that case,
  * the declaration must declare only one variable, whose declarator must just be an identifier,
