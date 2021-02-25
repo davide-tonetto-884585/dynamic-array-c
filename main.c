@@ -36,7 +36,7 @@ int main() {
     //dyn_arr_init(array, 10);
     DYN_ARR_INIT_DEFAULT(array);
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 100; ++i) {
         DYN_ARR_PUSH(array, i);
     }
 
