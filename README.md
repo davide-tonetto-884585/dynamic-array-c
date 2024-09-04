@@ -1,5 +1,5 @@
 # dynamic-array-c
 
-libreria che implementa l'utilizzo di array dinamici generici in C tramite l'uso di macro e funzioni.
+A library that implements the use of generic dynamic arrays in C, leveraging macros and functions for flexible and efficient data management. This library allows you to create and manipulate dynamic arrays of any data type, making it a powerful tool for handling collections of data without worrying about manual memory allocation or type-specific implementations.
 
-Per esempi sull'utilizzo guardare il file main.c
+For usage examples, please refer to the `main.c` file.
